@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Game Master — Acceso</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>RPG Game Master</h1>
+            <p class="subtitle">Gestiona personajes, razas y poderes</p>
+
+            <div class="tabs">
+                <button type="button" class="tab-btn active" onclick="mostrarLogin()">Login</button>
+                <button type="button" class="tab-btn" onclick="mostrarRegistro()">Registro</button>
+            </div>
+
+            <form id="loginForm" class="form active">
+                <input type="text" id="loginUser" placeholder="Usuario" required autocomplete="username">
+                <input type="password" id="loginPass" placeholder="Contraseña" required autocomplete="current-password">
+                <button type="submit">Ingresar</button>
+                <p id="loginError" class="error"></p>
+            </form>
+
+            <form id="registroForm" class="form">
+                <input type="text" id="regUser" placeholder="Usuario" required autocomplete="username">
+                <input type="email" id="regEmail" placeholder="Email" required autocomplete="email">
+                <input type="password" id="regPass" placeholder="Contraseña" required autocomplete="new-password">
+                <select id="regRol" required>
+                    <option value="">Selecciona rol</option>
+                    <option value="jugador">Jugador</option>
+                    <option value="gm">Game Master</option>
+                </select>
+                <button type="submit">Registrarse</button>
+                <p id="regError" class="error"></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
