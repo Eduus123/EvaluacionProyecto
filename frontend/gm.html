@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Game Master — RPG Game Master</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <h2>Panel Game Master</h2>
+            <button type="button" onclick="logout()">Cerrar Sesión</button>
+        </div>
+
+        <div class="content">
+            <div class="tabs">
+                <button type="button" class="tab-btn active" onclick="mostrarTab('personajes', event)">Personajes</button>
+                <button type="button" class="tab-btn" onclick="mostrarTab('catalogo', event)">Gestionar Catálogo</button>
+            </div>
+
+            <div id="personajesTab" class="tab-content active">
+                <div class="section">
+                    <h3>Todos los Personajes</h3>
+                    <div id="todosPersonajesList" class="personajes-grid"></div>
+                </div>
+            </div>
+
+            <div id="catalogoTab" class="tab-content">
+                <div class="section">
+                    <h3>Agregar Razas</h3>
+                    <form id="agregarRazaForm" class="form-inline">
+                        <input type="text" id="nombreRaza" placeholder="Nombre de raza" required>
+                        <button type="submit">Agregar Raza</button>
+                        <p id="razaError" class="error"></p>
+                    </form>
+
+                    <h3>Agregar Habilidades</h3>
+                    <form id="agregarHabilidadForm" class="form-inline">
+                        <input type="text" id="nombreHabilidad" placeholder="Nombre de habilidad" required>
+                        <button type="submit">Agregar Habilidad</button>
+                        <p id="habilidadError" class="error"></p>
+                    </form>
+
+                    <h3>Agregar Poderes</h3>
+                    <form id="agregarPoderForm" class="form-inline">
+                        <input type="text" id="nombrePoder" placeholder="Nombre de poder" required>
+                        <button type="submit">Agregar Poder</button>
+                        <p id="poderError" class="error"></p>
+                    </form>
+
+                    <h3>Agregar Equipamiento</h3>
+                    <form id="agregarEquipamientoForm" class="form-inline">
+                        <input type="text" id="nombreEquipamiento" placeholder="Nombre de equipamiento" required>
+                        <button type="submit">Agregar Equipamiento</button>
+                        <p id="equipamientoError" class="error"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para administrar nivel y estado (solo GM) -->
+    <div id="modalGM" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="cerrarModalGM()" title="Cerrar">&times;</span>
+            <h3>Administrar Personaje</h3>
+            <p id="gmPersonajeNombre" style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.95rem;"></p>
+
+            <form id="gmAdminForm">
+                <input type="hidden" id="gmPersonajeId">
+
+                <label for="gmEstadoSelect">Estado</label>
+                <select id="gmEstadoSelect" required>
+                    <option value="vivo">Vivo</option>
+                    <option value="congelado">Congelado</option>
+                    <option value="muerto">Muerto</option>
+                </select>
+
+                <label for="gmNivelInput">Nivel</label>
+                <input type="number" id="gmNivelInput" min="1" max="999" required placeholder="Nivel objetivo">
+
+                <div id="gmError" class="error"></div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModalGM()">Cancelar</button>
+                    <button type="submit">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        if (localStorage.getItem('rol') !== 'gm') {
+            window.location.href = 'index.html';
+        }
+        cargarCatalogo();
+        cargarTodosPersonajes();
+    </script>
+</body>
+</html>
