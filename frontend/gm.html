@@ -3,85 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Game Master — RPG Game Master</title>
+    <title>Trono del Game Master — RPG Game Master</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="container">
-        <div class="navbar">
-            <h2>Panel Game Master</h2>
-            <button type="button" onclick="logout()">Cerrar Sesión</button>
-        </div>
+<body class="page-gm">
+    <div class="world" aria-hidden="true">
+        <div class="sky"></div>
+        <div class="stars"></div>
+        <div class="moon"></div>
+        <svg class="mountains" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#0d1018" d="M0,320 L0,210 L170,70 L330,170 L500,50 L720,190 L880,80 L1120,200 L1300,90 L1440,170 L1440,320 Z"></path>
+            <path fill="#080a10" d="M0,320 L0,250 L220,150 L410,240 L580,130 L840,240 L1000,160 L1220,250 L1440,180 L1440,320 Z"></path>
+        </svg>
+        <div class="fog"></div>
+        <div class="embers" id="embers"></div>
+        <div class="vignette"></div>
+    </div>
 
-        <div class="content">
-            <div class="tabs">
-                <button type="button" class="tab-btn active" onclick="mostrarTab('personajes', event)">Personajes</button>
-                <button type="button" class="tab-btn" onclick="mostrarTab('catalogo', event)">Gestionar Catálogo</button>
+    <div class="app">
+        <div class="container">
+            <div class="navbar">
+                <h2>Panel de administración Game Master</h2>
+                <button type="button" onclick="logout()">Cerrar Sesión</button>
             </div>
 
-            <div id="personajesTab" class="tab-content active">
-                <div class="section">
-                    <h3>Todos los Personajes</h3>
-                    <div id="todosPersonajesList" class="personajes-grid"></div>
+            <div class="content">
+                <div class="tabs">
+                    <button type="button" class="tab-btn active" onclick="mostrarTab('personajes', event)">Héroes</button>
+                    <button type="button" class="tab-btn" onclick="mostrarTab('catalogo', event)">Códice</button>
                 </div>
-            </div>
 
-            <div id="catalogoTab" class="tab-content">
-                <div class="section">
-                    <h3>Agregar Razas</h3>
-                    <form id="agregarRazaForm" class="form-inline">
-                        <input type="text" id="nombreRaza" placeholder="Nombre de raza" required>
-                        <button type="submit">Agregar Raza</button>
-                        <p id="razaError" class="error"></p>
-                    </form>
+                <div id="personajesTab" class="tab-content active">
+                    <div class="section">
+                        <h3>Armería del reino</h3>
+                        <div id="todosPersonajesList" class="personajes-grid"></div>
+                    </div>
+                </div>
 
-                    <h3>Agregar Habilidades</h3>
-                    <form id="agregarHabilidadForm" class="form-inline">
-                        <input type="text" id="nombreHabilidad" placeholder="Nombre de habilidad" required>
-                        <button type="submit">Agregar Habilidad</button>
-                        <p id="habilidadError" class="error"></p>
-                    </form>
+                <div id="catalogoTab" class="tab-content">
+                    <div class="section">
+                        <h3>Facciones</h3>
+                        <form id="agregarFaccionForm" class="form-inline">
+                            <input type="text" id="nombreFaccion" placeholder="Nombre de facción" required>
+                            <select id="colorFaccion">
+                                <option value="azul">Azul</option>
+                                <option value="rojo">Rojo</option>
+                                <option value="verde">Verde</option>
+                                <option value="violeta">Violeta</option>
+                                <option value="oro">Oro</option>
+                            </select>
+                            <input type="text" id="descFaccion" placeholder="Descripción corta">
+                            <input type="file" id="imgFaccion" accept="image/png,image/jpeg,image/webp,image/gif">
+                            <button type="submit">Agregar facción</button>
+                            <p id="faccionError" class="error"></p>
+                        </form>
+                        <div id="galeriaFacciones" class="codex-grid"></div>
 
-                    <h3>Agregar Poderes</h3>
-                    <form id="agregarPoderForm" class="form-inline">
-                        <input type="text" id="nombrePoder" placeholder="Nombre de poder" required>
-                        <button type="submit">Agregar Poder</button>
-                        <p id="poderError" class="error"></p>
-                    </form>
+                        <h3>Razas del reino</h3>
+                        <form id="agregarRazaForm" class="form-inline">
+                            <input type="text" id="nombreRaza" placeholder="Nombre de raza" required>
+                            <select id="faccionRaza"></select>
+                            <input type="text" id="descRaza" placeholder="Lore de la raza">
+                            <input type="file" id="imgRaza" accept="image/png,image/jpeg,image/webp,image/gif">
+                            <button type="submit">Agregar raza</button>
+                            <p id="razaError" class="error"></p>
+                        </form>
+                        <div id="galeriaRazas" class="codex-grid"></div>
 
-                    <h3>Agregar Equipamiento</h3>
-                    <form id="agregarEquipamientoForm" class="form-inline">
-                        <input type="text" id="nombreEquipamiento" placeholder="Nombre de equipamiento" required>
-                        <button type="submit">Agregar Equipamiento</button>
-                        <p id="equipamientoError" class="error"></p>
-                    </form>
+                        <h3>Habilidades</h3>
+                        <form id="agregarHabilidadForm" class="form-inline">
+                            <input type="text" id="nombreHabilidad" placeholder="Nombre de habilidad" required>
+                            <input type="file" id="imgHabilidad" accept="image/png,image/jpeg,image/webp,image/gif">
+                            <button type="submit">Agregar habilidad</button>
+                            <p id="habilidadError" class="error"></p>
+                        </form>
+                        <div id="galeriaHabilidades" class="codex-grid"></div>
+
+                        <h3>Hechizos y poderes</h3>
+                        <form id="agregarPoderForm" class="form-inline">
+                            <input type="text" id="nombrePoder" placeholder="Nombre de poder" required>
+                            <input type="text" id="descPoder" placeholder="Lore del poder">
+                            <input type="file" id="imgPoder" accept="image/png,image/jpeg,image/webp,image/gif">
+                            <button type="submit">Agregar poder</button>
+                            <p id="poderError" class="error"></p>
+                        </form>
+                        <div id="galeriaPoderes" class="codex-grid"></div>
+
+                        <h3>Equipamiento</h3>
+                        <form id="agregarEquipamientoForm" class="form-inline">
+                            <input type="text" id="nombreEquipamiento" placeholder="Nombre de equipamiento" required>
+                            <input type="file" id="imgEquipamiento" accept="image/png,image/jpeg,image/webp,image/gif">
+                            <button type="submit">Agregar equipamiento</button>
+                            <p id="equipamientoError" class="error"></p>
+                        </form>
+                        <div id="galeriaEquipamiento" class="codex-grid"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal para administrar nivel y estado (solo GM) -->
+    <input type="file" id="imgCatalogoFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+
     <div id="modalGM" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="cerrarModalGM()" title="Cerrar">&times;</span>
-            <h3>Administrar Personaje</h3>
-            <p id="gmPersonajeNombre" style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.95rem;"></p>
-
+            <h3>Administrar personaje</h3>
+            <p id="gmPersonajeNombre" style="color: var(--muted); margin-bottom: 16px;"></p>
             <form id="gmAdminForm">
                 <input type="hidden" id="gmPersonajeId">
-
-                <label for="gmEstadoSelect">Estado</label>
-                <select id="gmEstadoSelect" required>
-                    <option value="vivo">Vivo</option>
-                    <option value="congelado">Congelado</option>
-                    <option value="muerto">Muerto</option>
-                </select>
-
+                <label>Estado del personaje</label>
+                <select id="gmEstadoSelect" required></select>
+                <div id="gmEstadoGrid" class="estado-grid"></div>
                 <label for="gmNivelInput">Nivel</label>
                 <input type="number" id="gmNivelInput" min="1" max="999" required placeholder="Nivel objetivo">
-
                 <div id="gmError" class="error"></div>
-
                 <div class="modal-actions">
                     <button type="button" class="btn-cancelar" onclick="cerrarModalGM()">Cancelar</button>
                     <button type="submit">Guardar</button>
@@ -90,13 +126,32 @@
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <div id="modalCatalogo" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="cerrarModalCatalogo()">&times;</span>
+            <h3 id="catalogoEditTitulo">Editar</h3>
+            <form id="editarCatalogoForm">
+                <input type="hidden" id="catEditTipo">
+                <input type="hidden" id="catEditId">
+                <label>Nombre</label>
+                <input type="text" id="catEditNombre" required>
+                <div id="catEditExtra"></div>
+                <label>Imagen (opcional)</label>
+                <input type="file" id="catEditImagen" accept="image/png,image/jpeg,image/webp,image/gif">
+                <div id="catEditError" class="error"></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModalCatalogo()">Cancelar</button>
+                    <button type="submit">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         if (localStorage.getItem('rol') !== 'gm') {
             window.location.href = 'index.html';
         }
-        cargarCatalogo();
-        cargarTodosPersonajes();
     </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
