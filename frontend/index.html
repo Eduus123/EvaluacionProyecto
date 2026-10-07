@@ -6,37 +6,69 @@
     <title>RPG Game Master — Acceso</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="container">
-        <div class="form-container">
-            <h1>RPG Game Master</h1>
-            <p class="subtitle">Gestiona personajes, razas y poderes</p>
+<body class="page-login">
+    <div class="world" aria-hidden="true">
+        <div class="sky"></div>
+        <div class="stars"></div>
+        <div class="moon"></div>
+        <svg class="mountains" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#0d1018" d="M0,320 L0,210 L170,70 L330,170 L500,50 L720,190 L880,80 L1120,200 L1300,90 L1440,170 L1440,320 Z"></path>
+            <path fill="#080a10" d="M0,320 L0,250 L220,150 L410,240 L580,130 L840,240 L1000,160 L1220,250 L1440,180 L1440,320 Z"></path>
+        </svg>
+        <div class="fog"></div>
+        <div class="embers" id="embers"></div>
+        <div class="vignette"></div>
+    </div>
 
-            <div class="tabs">
-                <button type="button" class="tab-btn active" onclick="mostrarLogin()">Login</button>
-                <button type="button" class="tab-btn" onclick="mostrarRegistro()">Registro</button>
-            </div>
+    <div class="app">
+        <header class="topbar">
+            <div class="crest"><span>⚔</span></div>
+            <strong>RPG GAME MASTER</strong>
+        </header>
 
-            <form id="loginForm" class="form active">
-                <input type="text" id="loginUser" placeholder="Usuario" required autocomplete="username">
-                <input type="password" id="loginPass" placeholder="Contraseña" required autocomplete="current-password">
-                <button type="submit">Ingresar</button>
-                <p id="loginError" class="error"></p>
-            </form>
+        <main class="login-hero">
+            <section class="lore">
+                <h1>Forja tu leyenda</h1>
+                <p>Elige tu raza, arma hechizos ancestrales y sobrevive al juicio del Game Master. Un reino vivo, con héroes, poderes y un destino que se escribe en cada partida.</p>
+                <div class="feature-row">
+                    <span>Razas</span>
+                    <span>Hechizos</span>
+                    <span>Armamento</span>
+                    <span>Héroes</span>
+                </div>
+            </section>
 
-            <form id="registroForm" class="form">
-                <input type="text" id="regUser" placeholder="Usuario" required autocomplete="username">
-                <input type="email" id="regEmail" placeholder="Email" required autocomplete="email">
-                <input type="password" id="regPass" placeholder="Contraseña" required autocomplete="new-password">
-                <select id="regRol" required>
-                    <option value="">Selecciona rol</option>
-                    <option value="jugador">Jugador</option>
-                    <option value="gm">Game Master</option>
-                </select>
-                <button type="submit">Registrarse</button>
-                <p id="regError" class="error"></p>
-            </form>
-        </div>
+            <section class="gate" id="gate">
+                <h1>Entrar al reino</h1>
+                <p class="subtitle">Gestiona personajes, razas y poderes</p>
+                <hr class="gold-rule">
+
+                <div class="tabs">
+                    <button type="button" class="tab-btn active" onclick="mostrarLogin()">Login</button>
+                    <button type="button" class="tab-btn" onclick="mostrarRegistro()">Registro</button>
+                </div>
+
+                <form id="loginForm" class="form active">
+                    <input type="text" id="loginUser" placeholder="Usuario" required autocomplete="username">
+                    <input type="password" id="loginPass" placeholder="Contraseña" required autocomplete="current-password">
+                    <button type="submit">Cruzar el portal</button>
+                    <p id="loginError" class="error"></p>
+                </form>
+
+                <form id="registroForm" class="form">
+                    <input type="text" id="regUser" placeholder="Usuario" required autocomplete="username">
+                    <input type="email" id="regEmail" placeholder="Email" required autocomplete="email">
+                    <input type="password" id="regPass" placeholder="Contraseña" required autocomplete="new-password">
+                    <select id="regRol" required>
+                        <option value="">Selecciona rol</option>
+                        <option value="jugador">Jugador</option>
+                        <option value="gm">Game Master</option>
+                    </select>
+                    <button type="submit">Crear cuenta</button>
+                    <p id="regError" class="error"></p>
+                </form>
+            </section>
+        </main>
     </div>
 
     <script src="js/app.js"></script>
