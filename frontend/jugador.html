@@ -3,44 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Jugador — RPG Game Master</title>
+    <title>Sala de Héroes — RPG Game Master</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="container">
-        <div class="navbar">
-            <h2>Panel Jugador</h2>
-            <button type="button" onclick="logout()">Cerrar Sesión</button>
+<body class="page-jugador">
+    <div class="world" aria-hidden="true">
+        <div class="sky"></div>
+        <div class="stars"></div>
+        <div class="moon"></div>
+        <svg class="mountains" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#0d1018" d="M0,320 L0,210 L170,70 L330,170 L500,50 L720,190 L880,80 L1120,200 L1300,90 L1440,170 L1440,320 Z"></path>
+            <path fill="#080a10" d="M0,320 L0,250 L220,150 L410,240 L580,130 L840,240 L1000,160 L1220,250 L1440,180 L1440,320 Z"></path>
+        </svg>
+        <div class="fog"></div>
+        <div class="embers" id="embers"></div>
+        <div class="vignette"></div>
+    </div>
+
+    <div class="app">
+        <div class="navbar forge-nav">
+            <h2>Creación de personaje</h2>
+            <div class="nav-actions">
+                <button type="button" class="tab-btn" onclick="mostrarVistaJugador('lista')">Mis personajes</button>
+                <button type="button" onclick="logout()">Cerrar Sesión</button>
+            </div>
         </div>
 
-        <div class="content">
-            <div class="section">
-                <h3>Crear Personaje</h3>
-                <form id="crearPersonajeForm">
-                    <input type="text" id="nombrePersonaje" placeholder="Nombre del personaje" required>
-                    <select id="razaSelect" required>
-                        <option value="">Selecciona raza</option>
-                    </select>
-                    <select id="habilidad1Select" required>
-                        <option value="">Selecciona habilidad 1</option>
-                    </select>
-                    <select id="habilidad2Select" required>
-                        <option value="">Selecciona habilidad 2</option>
-                    </select>
-                    <select id="poderSelect" required>
-                        <option value="">Selecciona poder</option>
-                    </select>
-                    <select id="equipamientoSelect" required>
-                        <option value="">Selecciona equipamiento</option>
-                    </select>
-                    <button type="submit">Crear Personaje</button>
+        <form id="crearPersonajeForm" class="char-forge" data-vista="crear">
+            <input type="file" id="imagenPersonaje" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+            <select id="faccionSelect" required></select>
+            <select id="razaSelect" required></select>
+            <select id="habilidad1Select" required></select>
+            <select id="habilidad2Select" required></select>
+            <select id="poderSelect" required></select>
+            <select id="equipamientoSelect" required></select>
+
+            <aside class="forge-left">
+                <div class="faction-board" id="factionBoard"></div>
+                <p class="picker-label">Poder</p>
+                <div class="icon-bar" id="poderPicker"></div>
+                <p class="picker-label">Habilidades</p>
+                <div class="icon-bar dual">
+                    <div id="hab1Picker"></div>
+                    <div id="hab2Picker"></div>
+                </div>
+                <p class="picker-label">Equipamiento</p>
+                <div class="icon-bar" id="equipoPicker"></div>
+            </aside>
+
+            <div class="forge-center">
+                <div class="stage" id="heroStage"></div>
+                <div class="name-plate">
+                    <span>Nombre</span>
+                    <input type="text" id="nombrePersonaje" placeholder="Nombre del héroe" required maxlength="40">
+                    <button type="submit">Aceptar</button>
                     <p id="crearError" class="error"></p>
                     <p id="crearExito" class="exito"></p>
-                </form>
+                </div>
             </div>
 
+            <aside class="forge-right">
+                <article class="lore-box" id="loreFaccion"></article>
+                <article class="lore-box" id="loreRaza"></article>
+                <article class="lore-box" id="lorePoder"></article>
+            </aside>
+        </form>
+
+        <div id="listaHeroes" class="container forge-list" hidden>
             <div class="section">
-                <h3>Mis Personajes</h3>
+                <div class="navbar" style="margin-bottom:16px">
+                    <h2>Mis personajes</h2>
+                    <button type="button" onclick="mostrarVistaJugador('crear')">Crear otro</button>
+                </div>
                 <div id="personajesList" class="personajes-grid"></div>
             </div>
         </div>
@@ -49,45 +83,40 @@
     <div id="modalEditar" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="cerrarModal()" title="Cerrar">&times;</span>
-            <h3>Editar Personaje</h3>
+            <h3>Editar personaje</h3>
             <form id="editarPersonajeForm">
                 <input type="hidden" id="editPersonajeId">
-
                 <label for="editNombre">Nombre</label>
                 <input type="text" id="editNombre" required>
-
+                <label for="editFaccionSelect">Facción</label>
+                <select id="editFaccionSelect" required></select>
                 <label for="editRazaSelect">Raza</label>
                 <select id="editRazaSelect" required></select>
-
                 <label for="editHabilidad1Select">Habilidad 1</label>
                 <select id="editHabilidad1Select" required></select>
-
                 <label for="editHabilidad2Select">Habilidad 2</label>
                 <select id="editHabilidad2Select" required></select>
-
                 <label for="editPoderSelect">Poder</label>
                 <select id="editPoderSelect" required></select>
-
                 <label for="editEquipamientoSelect">Equipamiento</label>
                 <select id="editEquipamientoSelect" required></select>
-
+                <label for="editImagen">Retrato (opcional)</label>
+                <input type="file" id="editImagen" accept="image/png,image/jpeg,image/webp,image/gif">
+                <img id="editImagenPreview" class="edit-thumb" alt="Vista previa del retrato">
                 <div id="editError" class="error"></div>
-
                 <div class="modal-actions">
                     <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
-                    <button type="submit">Guardar Cambios</button>
+                    <button type="submit">Guardar cambios</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="js/app.js"></script>
     <script>
         if (localStorage.getItem('rol') !== 'jugador') {
             window.location.href = 'index.html';
         }
-        cargarCatalogo();
-        cargarPersonajesJugador();
     </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
