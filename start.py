@@ -37,7 +37,7 @@ def main():
         print(f"🌐 Abriendo login: {url}")
         webbrowser.open(url)
 
-        print("\n✅ Todo listo.")
+        print("\nTodo listo.")
         print("   - Backend:  http://localhost:5000")
         print("   - Frontend: ya se abrió en el navegador")
         print("\nPresiona Ctrl+C para detener el servidor.\n")
